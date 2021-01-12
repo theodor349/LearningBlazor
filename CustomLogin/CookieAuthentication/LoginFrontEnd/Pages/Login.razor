@@ -1,0 +1,20 @@
+﻿@page "/"
+
+<h3>Login</h3>
+
+<EditForm Model="requestData">
+    <label>Email</label>
+    <input @bind-value="requestData.Email"/>
+    <label>Password</label>
+    <input @bind-value="requestData.Password" type="password"/>
+    <button @onclick="OnLogin">Login</button>
+</EditForm>
+
+@code{
+    private Data.Login requestData = new Data.Login();
+
+    private async Task OnLogin()
+    {
+        await Task.Delay(100);
+    }
+}
