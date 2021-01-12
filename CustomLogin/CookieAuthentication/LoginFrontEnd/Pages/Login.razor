@@ -20,6 +20,6 @@
     private async Task OnLogin()
     {
         await _login.LoginUser();
-        _navigationManager.NavigateTo("/counter");
+        _navigationManager.NavigateTo("/counter", true);
     }
 }
