@@ -32,9 +32,11 @@ namespace LoginFrontEnd
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
-            services.AddTransient<HttpClient>();
             services.AddOptions();
             services.AddAuthenticationCore();
+            string baseAddress = "https://localhost:5001";
+            services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
+            services.AddHttpClient<ILogin, Login>("API", client => client.BaseAddress = new Uri(baseAddress));
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
         }
 

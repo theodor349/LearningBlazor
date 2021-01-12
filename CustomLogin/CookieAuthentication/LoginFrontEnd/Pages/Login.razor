@@ -1,20 +1,25 @@
 ﻿@page "/"
+@inject ILogin _login
+@inject NavigationManager _navigationManager
+
 
 <h3>Login</h3>
 
-<EditForm Model="requestData">
+<EditForm Model="_login">
     <label>Email</label>
-    <input @bind-value="requestData.Email"/>
+    <input @bind-value="_login.EmailAddress" />
     <label>Password</label>
-    <input @bind-value="requestData.Password" type="password"/>
+    <input @bind-value="_login.Password" type="password" />
     <button @onclick="OnLogin">Login</button>
 </EditForm>
 
 @code{
-    private Data.Login requestData = new Data.Login();
+
+    private bool IsLoggedIn => _login is not null;
 
     private async Task OnLogin()
     {
-        await Task.Delay(100);
+        await _login.LoginUser();
+        _navigationManager.NavigateTo("/counter");
     }
 }

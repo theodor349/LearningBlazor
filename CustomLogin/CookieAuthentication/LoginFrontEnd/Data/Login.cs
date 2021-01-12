@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace LoginFrontEnd.Data
 {
-    public class Login
+    public class Login : ILogin
     {
         private readonly HttpClient _client;
 
-        public string UserId { get; set; }
         public string EmailAddress { get; set; }
         public string Password { get; set; }
 
@@ -35,7 +34,7 @@ namespace LoginFrontEnd.Data
             return new Login
             {
                 EmailAddress = user.EmailAddress,
-                Password = user.Password
+                Password = user.Password,
             };
         }
 
@@ -44,7 +43,7 @@ namespace LoginFrontEnd.Data
             return new User
             {
                 EmailAddress = loginViewModel.EmailAddress,
-                Password = loginViewModel.Password
+                Password = loginViewModel.Password,
             };
         }
 
