@@ -30,14 +30,14 @@ namespace LoginFrontEnd
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             services.AddSingleton<WeatherForecastService>();
 
-            services.AddOptions();
-            services.AddAuthenticationCore();
+            //services.AddOptions();
+            //services.AddAuthenticationCore();
             string baseAddress = "https://localhost:5001";
             services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
             services.AddHttpClient<ILogin, Login>("API", client => client.BaseAddress = new Uri(baseAddress));
-            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +58,9 @@ namespace LoginFrontEnd
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
