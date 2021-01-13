@@ -1,0 +1,45 @@
+﻿@page "/"
+@inject HttpClient _client
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<button @onclick="() => GetProduct()">Get Product</button>
+
+<p>@message</p>
+
+@if(product is not null)
+{
+    <p>Id: @product.Id</p>
+    <p>Price: @product.Price</p>
+}
+
+@code{
+
+    private Product product;
+    private string message = "";
+
+    private async Task GetProduct()
+    {
+        var res = await _client.GetAsync("https://localhost:5001/api/product");
+
+        if (res.IsSuccessStatusCode)
+        {
+            try
+            {
+                product = await res.Content.ReadAsAsync<Product>();
+            }
+            catch (Exception)
+            {
+                message = await res.Content.ReadAsStringAsync();
+            }
+        }
+    }
+
+    class Product
+    {
+        public int Id { get; set; }
+        public int Price { get; set; }
+    }
+}
