@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginAPI", "LoginAPI\LoginAPI.csproj", "{97E14CAD-F38B-4A28-8048-E88A5103E08E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginFrontEnd", "LoginFrontEnd\LoginFrontEnd.csproj", "{711A52E7-47C7-4F38-9B07-FAB6A11385D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginAPI", "LoginAPI\LoginAPI.csproj", "{97E14CAD-F38B-4A28-8048-E88A5103E08E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{97E14CAD-F38B-4A28-8048-E88A5103E08E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97E14CAD-F38B-4A28-8048-E88A5103E08E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97E14CAD-F38B-4A28-8048-E88A5103E08E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{711A52E7-47C7-4F38-9B07-FAB6A11385D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{711A52E7-47C7-4F38-9B07-FAB6A11385D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{711A52E7-47C7-4F38-9B07-FAB6A11385D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{711A52E7-47C7-4F38-9B07-FAB6A11385D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
