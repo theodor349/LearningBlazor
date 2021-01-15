@@ -1,5 +1,7 @@
 # LearningBlazor
  Here are all the projects that I have used to learn different parts of the Blazor Framework
 
- - Custome Login
+ - Custom Login (Works)
+   - JWT Bearer Authentication -> Works
    - Cookie Authentication -> Not working
+   - Identity Authentication -> Not working
