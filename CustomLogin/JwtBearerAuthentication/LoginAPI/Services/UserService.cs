@@ -47,7 +47,6 @@ namespace LoginAPI.Services
             _context.Update(user);
             _context.SaveChanges();
 
-            RefreshToken(refreshTotken.Token, ipAddress);
             return new AuthenticateResponse(user, jwtToken, refreshTotken.Token);
         }
 
