@@ -1,4 +1,6 @@
+using LoginFrontEnd.Api;
 using LoginFrontEnd.Data;
+using LoginFrontEnd.Models;
 using LoginFrontEnd.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -34,10 +36,9 @@ namespace LoginFrontEnd
 
             services.AddSingleton<WeatherForecastService>();
 
-            string baseAddress = "https://localhost:5001/api/";
-            services.AddTransient(sp => new HttpClient() { BaseAddress = new Uri(baseAddress) });
             services.AddSingleton<ILoginViewModel, LoginViewModel>();
-            //services.AddHttpClient<ILoginViewModel, LoginViewModel>("ApiClient", c => c.BaseAddress = new Uri(baseAddress));
+            services.AddSingleton<ILoggedInUserModel, LoggedInUserModel>();
+            services.AddSingleton<IApiHelper, ApiHelper>();
             services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
         }
 

@@ -1,4 +1,4 @@
-﻿using LoginFrontEnd.Models;
+﻿using LoginFrontEnd.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,37 +10,23 @@ namespace LoginFrontEnd.ViewModels
 {
     public class LoginViewModel : ILoginViewModel
     {
+        private readonly IApiHelper _api;
+
         public string EmailAddress { get; set; }
         public string Password { get; set; }
-        public string Token { get; set; }
 
-        private HttpClient _client;
         public LoginViewModel()
         {
 
         }
-        public LoginViewModel(HttpClient httpClient)
+        public LoginViewModel(IApiHelper api)
         {
-            _client = httpClient;
+            _api = api;
         }
 
         public async Task LoginUser()
         {
-            var response = await _client.PostAsJsonAsync<TokenRequestModel>("token", this);
-            if (response.IsSuccessStatusCode)
-            {
-                var res = await response.Content.ReadAsAsync<TokenResult>();
-                Token = res.Access_Token;
-            }
-        }
-
-        public static implicit operator TokenRequestModel(LoginViewModel model)
-        {
-            return new TokenRequestModel()
-            {
-                Username = model.EmailAddress,
-                Password = model.Password,
-            };
+            await _api.LoginAsync(EmailAddress, Password);
         }
     }
 }

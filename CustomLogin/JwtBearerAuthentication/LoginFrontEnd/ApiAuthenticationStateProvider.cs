@@ -1,4 +1,5 @@
-﻿using LoginFrontEnd.ViewModels;
+﻿using LoginFrontEnd.Api;
+using LoginFrontEnd.ViewModels;
 using Microsoft.AspNetCore.Components.Authorization;
 using System;
 using System.Collections.Generic;
@@ -12,35 +13,30 @@ namespace LoginFrontEnd
 {
     public class ApiAuthenticationStateProvider : AuthenticationStateProvider
     {
-        private readonly ILoginViewModel _currentUser;
-        private readonly HttpClient _client;
+        private readonly IApiHelper _api;
 
-        public ApiAuthenticationStateProvider(ILoginViewModel loginModel, HttpClient client)
+        public ApiAuthenticationStateProvider(IApiHelper api)
         {
-            _currentUser = loginModel;
-            _client = client;
+            _api = api;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var response = await _client.GetAsync("token");
-            if (response.IsSuccessStatusCode)
+            var username = await _api.GetLoggedInUsername();
+            if(username is not null)
             {
-                var isLoggedIn = await response.Content.ReadAsAsync<bool>();
-                if (isLoggedIn)
-                {
-                    //create a claims
-                    var claimEmailAddress = new Claim(ClaimTypes.Name, _currentUser.EmailAddress);
-                    var claimNameIdentifier = new Claim(ClaimTypes.NameIdentifier, Convert.ToString(_currentUser.EmailAddress));
-                    //create claimsIdentity
-                    var claimsIdentity = new ClaimsIdentity(new[] { claimEmailAddress, claimNameIdentifier }, "serverAuth");
-                    //create claimsPrincipal
-                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                //create a claims
+                var claimEmailAddress = new Claim(ClaimTypes.Name, username);
+                var claimNameIdentifier = new Claim(ClaimTypes.NameIdentifier, Convert.ToString(username));
+                //create claimsIdentity
+                var claimsIdentity = new ClaimsIdentity(new[] { claimEmailAddress, claimNameIdentifier }, "serverAuth");
+                //create claimsPrincipal
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-                    return new AuthenticationState(claimsPrincipal);
-                }
+                return new AuthenticationState(claimsPrincipal);
             }
-            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            else
+                return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
     }
 }

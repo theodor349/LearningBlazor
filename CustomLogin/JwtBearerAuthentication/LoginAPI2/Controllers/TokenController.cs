@@ -40,9 +40,10 @@ namespace LoginAPI2.Controllers
         }
 
         [HttpGet]
-        public IActionResult IsAuthenticated()
+        public string LoggedInUser()
         {
-            return new ObjectResult(User.Identity.IsAuthenticated);
+            var res = User;
+            return res.Identity.Name;
         }
 
         private async Task<bool> IsValidUsernameAndPassword(string username, string password)
@@ -81,6 +82,7 @@ namespace LoginAPI2.Controllers
 
             var output = new
             {
+                Id = user.Id,
                 Access_Token = new JwtSecurityTokenHandler().WriteToken(token),
                 UserName = username,
             };
@@ -90,6 +92,7 @@ namespace LoginAPI2.Controllers
 
     public class TokenRequest
     {
+        public string Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
     }
