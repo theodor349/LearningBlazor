@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginAPI", "LoginAPI\LoginA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginAPI2", "LoginAPI2\LoginAPI2.csproj", "{0B4E4F92-883D-42A8-8124-E2D1088352A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginFrontEnd", "LoginFrontEnd\LoginFrontEnd.csproj", "{456E6C3D-78AA-4926-A969-62C4834EDC4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0B4E4F92-883D-42A8-8124-E2D1088352A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B4E4F92-883D-42A8-8124-E2D1088352A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B4E4F92-883D-42A8-8124-E2D1088352A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456E6C3D-78AA-4926-A969-62C4834EDC4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456E6C3D-78AA-4926-A969-62C4834EDC4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456E6C3D-78AA-4926-A969-62C4834EDC4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456E6C3D-78AA-4926-A969-62C4834EDC4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
