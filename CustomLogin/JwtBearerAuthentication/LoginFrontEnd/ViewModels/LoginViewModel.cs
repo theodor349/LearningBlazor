@@ -14,19 +14,19 @@ namespace LoginFrontEnd.ViewModels
         public string Password { get; set; }
         public string Token { get; set; }
 
-        private HttpClient _httpClient;
+        private HttpClient _client;
         public LoginViewModel()
         {
 
         }
         public LoginViewModel(HttpClient httpClient)
         {
-            _httpClient = httpClient;
+            _client = httpClient;
         }
 
         public async Task LoginUser()
         {
-            var response = await _httpClient.PostAsJsonAsync<TokenRequestModel>("token", this);
+            var response = await _client.PostAsJsonAsync<TokenRequestModel>("token", this);
             if (response.IsSuccessStatusCode)
             {
                 var res = await response.Content.ReadAsAsync<TokenResult>();

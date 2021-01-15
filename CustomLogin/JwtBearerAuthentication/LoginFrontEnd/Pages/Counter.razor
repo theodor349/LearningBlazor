@@ -6,6 +6,16 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<AuthorizeView>
+    <Authorized>
+        <p>You are Logged In</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not Logged In</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+
 @code {
     private int currentCount = 0;
 

@@ -2,6 +2,7 @@ using LoginFrontEnd.Data;
 using LoginFrontEnd.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace LoginFrontEnd
@@ -31,8 +33,12 @@ namespace LoginFrontEnd
             services.AddServerSideBlazor();
 
             services.AddSingleton<WeatherForecastService>();
+
             string baseAddress = "https://localhost:5001/api/";
-            services.AddHttpClient<ILoginViewModel, LoginViewModel>("ApiClient", c => c.BaseAddress = new Uri(baseAddress));
+            services.AddTransient(sp => new HttpClient() { BaseAddress = new Uri(baseAddress) });
+            services.AddSingleton<ILoginViewModel, LoginViewModel>();
+            //services.AddHttpClient<ILoginViewModel, LoginViewModel>("ApiClient", c => c.BaseAddress = new Uri(baseAddress));
+            services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

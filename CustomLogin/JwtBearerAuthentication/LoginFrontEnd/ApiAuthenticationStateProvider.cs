@@ -26,15 +26,19 @@ namespace LoginFrontEnd
             var response = await _client.GetAsync("token");
             if (response.IsSuccessStatusCode)
             {
-                //create a claims
-                var claimEmailAddress = new Claim(ClaimTypes.Name, _currentUser.EmailAddress);
-                var claimNameIdentifier = new Claim(ClaimTypes.NameIdentifier, Convert.ToString(_currentUser.EmailAddress));
-                //create claimsIdentity
-                var claimsIdentity = new ClaimsIdentity(new[] { claimEmailAddress, claimNameIdentifier }, "serverAuth");
-                //create claimsPrincipal
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                var isLoggedIn = await response.Content.ReadAsAsync<bool>();
+                if (isLoggedIn)
+                {
+                    //create a claims
+                    var claimEmailAddress = new Claim(ClaimTypes.Name, _currentUser.EmailAddress);
+                    var claimNameIdentifier = new Claim(ClaimTypes.NameIdentifier, Convert.ToString(_currentUser.EmailAddress));
+                    //create claimsIdentity
+                    var claimsIdentity = new ClaimsIdentity(new[] { claimEmailAddress, claimNameIdentifier }, "serverAuth");
+                    //create claimsPrincipal
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-                return new AuthenticationState(claimsPrincipal);
+                    return new AuthenticationState(claimsPrincipal);
+                }
             }
             return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
