@@ -6,22 +6,37 @@
 <h2><b>Login</b></h2>
 <hr>
 
-<div class="col-6">
-    <input type="text" @bind="_loginModel.EmailAddress" class="form-control" placeholder="email address">
-</div>
-<br />
-<div class="col-6">
-    <input type="password" @bind="_loginModel.Password" class="form-control" placeholder="password">
-</div>
-<br />
-<div class="col-6">
-    <button class="btn btn-primary" @onclick="LoginUser">Login</button>
-</div>
+<AuthorizeView>
+    <Authorized>
+        <div class="col-6">
+            <button class="btn btn-primary" @onclick="Logout">Logout</button>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="col-6">
+            <input type="text" @bind="_loginModel.EmailAddress" class="form-control" placeholder="email address">
+        </div>
+        <br />
+        <div class="col-6">
+            <input type="password" @bind="_loginModel.Password" class="form-control" placeholder="password">
+        </div>
+        <br />
+        <div class="col-6">
+            <button class="btn btn-primary" @onclick="LoginUser">Login</button>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     public async Task LoginUser()
     {
         await _loginModel.LoginUser();
+        _navManager.NavigateTo("/counter", true);
+    }
+
+    public void Logout()
+    {
+        _loginModel.Logout();
         _navManager.NavigateTo("/counter", true);
     }
 }

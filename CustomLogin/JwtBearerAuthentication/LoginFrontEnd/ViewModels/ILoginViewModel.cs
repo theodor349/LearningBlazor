@@ -8,5 +8,6 @@ namespace LoginFrontEnd.ViewModels
         string Password { get; set; }
 
         Task LoginUser();
+        void Logout();
     }
 }

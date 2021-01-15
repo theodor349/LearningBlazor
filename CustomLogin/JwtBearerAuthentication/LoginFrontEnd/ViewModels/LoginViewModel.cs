@@ -28,5 +28,10 @@ namespace LoginFrontEnd.ViewModels
         {
             await _api.LoginAsync(EmailAddress, Password);
         }
+
+        public void Logout()
+        {
+            _api.Logout();
+        }
     }
 }
