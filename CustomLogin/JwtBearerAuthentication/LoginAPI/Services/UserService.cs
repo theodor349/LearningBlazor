@@ -47,12 +47,13 @@ namespace LoginAPI.Services
             _context.Update(user);
             _context.SaveChanges();
 
+            RefreshToken(refreshTotken.Token, ipAddress);
             return new AuthenticateResponse(user, jwtToken, refreshTotken.Token);
         }
 
         public AuthenticateResponse RefreshToken(string token, string ipAddress)
         {
-            var user = _context.Users.SingleOrDefault(user => user.RefreshTokens.Any(testc => testc.Token == token));
+            var user = _context.Users.SingleOrDefault(user => user.RefreshTokens.Any(t => t.Token == token));
             if (user is null) return null;
 
             var refreshToken = user.RefreshTokens.Single(x => x.Token == token);

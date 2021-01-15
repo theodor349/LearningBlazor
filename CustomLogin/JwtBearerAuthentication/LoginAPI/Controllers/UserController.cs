@@ -33,7 +33,7 @@ namespace LoginAPI.Controllers
                 return BadRequest("Username or Password is incorrect.");
 
             SetTokenCookie(response.RefreshToken);
-            return Ok();
+            return Ok(response);
         }
 
         [AllowAnonymous]

@@ -17,6 +17,6 @@ namespace LoginAPI.Entities
         public string Password { get; set; }
 
         [JsonIgnore]
-        public List<RefreshToken> RefreshTokens { get; set; }
+        public List<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }
