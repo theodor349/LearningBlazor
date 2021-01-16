@@ -43,7 +43,10 @@ namespace LoginAPI2.Controllers
         public string LoggedInUser()
         {
             var res = User;
-            return res.Identity.Name;
+            if (res.Identity.IsAuthenticated)
+                return res.Identity.Name;
+            else 
+                return null;
         }
 
         private async Task<bool> IsValidUsernameAndPassword(string username, string password)
