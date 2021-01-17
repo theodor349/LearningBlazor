@@ -1,0 +1,23 @@
+﻿<div class="grid">
+    @for (int x = 0; x < Columns; x++)
+    {
+        <div class="column">
+            @for (int y = 0; y < Rows; y++)
+            {
+                <Cell Value="@getValue(x, y)" Color="@getColor(x, y)" x="x" y="y" valueChanged="valueChanged"></Cell>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int Rows { get; set; }
+    [Parameter] public int Columns { get; set; }
+    [Parameter] public GetValue getValue { get; set; }
+    [Parameter] public GetColor getColor { get; set; }
+    [Parameter] public ValueChanged valueChanged { get; set; }
+
+    public delegate void ValueChanged(int x, int y, string v);
+    public delegate string GetValue(int x, int y);
+    public delegate Color GetColor(int x, int y);
+}

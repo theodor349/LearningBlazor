@@ -1,0 +1,24 @@
+﻿
+<div class="cell @(y % 4 == 0 ? "hourStart" : "")">
+    <input type="text" @bind-value="Value" style="background-color: rgb(@Color.R, @Color.G, @Color.B)"/>
+</div>
+
+@code {
+    private string _value = "";
+    [Parameter] public string Value {
+        get => _value;
+        set
+        {
+            if (_value.Equals(value))
+                return;
+            _value = value;
+            valueChanged?.Invoke(x, y, _value);
+        }
+    }
+    [Parameter] public Color Color { get; set; }
+    [Parameter] public int x { get; set; }
+    [Parameter] public int y { get; set; }
+    [Parameter] public ValueChanged valueChanged { get; set; }
+
+    public delegate void ValueChanged(int x, int y, string v);
+}

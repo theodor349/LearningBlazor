@@ -1,0 +1,10 @@
+﻿
+<div class="cell @(y % 4 == 0 ? "hourStart" : "")">
+    <p>@Value</p>
+</div>
+
+@code {
+    [Parameter] public string Value { get; set; }
+    [Parameter] public int x { get; set; }
+    [Parameter] public int y { get; set; }
+}

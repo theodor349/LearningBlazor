@@ -1,0 +1,55 @@
+﻿.week {
+    margin-bottom: 25px;
+    display: flex;
+    background-color: lightgrey;
+}
+.weekHeader {
+    display: flex;
+}
+
+    .weekHeader h3 {
+        width: 14%;
+        margin: 1px;
+        text-align: center;
+    }
+
+.grid {
+    width: 100%;
+    display: flex;
+    color: whitesmoke;
+    /*background-color: slategray;*/
+}
+    .grid .column {
+        width: 14.28%;
+    }
+
+            .grid .column .cell input {
+                margin: 0 auto;
+                width: 99%;
+                padding: 0;
+                padding-left: 5px;
+            }
+
+.column {
+    width: 50px;
+}
+
+    .column .cell {
+        margin: 1px;
+    }
+
+        .column .cell.hourStart {
+            margin-top: 4px;
+        }
+
+        .column .cell.hourStart {
+            border-top: solid 2px;
+        }
+
+        .column .cell p {
+            text-align: center;
+            margin: 0 auto;
+            height: 28px;
+            padding-top: 3px;
+        }
+

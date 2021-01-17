@@ -1,0 +1,18 @@
+﻿<div class="column">
+    @for (int y = 0; y < 96; y++)
+    {
+        <TimeCell Value="@GetTime(y)" y="y" x="-1"></TimeCell>
+    }
+</div>
+
+@code {
+    [Parameter] public int StartingHour { get; set; }
+
+    private string GetTime(int quarter)
+    {
+        var ts = new TimeSpan((int)(quarter / 4), (quarter % 4) * 15, 0);
+        ts = ts.Add(new TimeSpan(24 + StartingHour, 0, 0));
+
+        return ts.ToString(@"hh\:mm");
+    }
+}

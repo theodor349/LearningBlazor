@@ -1,0 +1,18 @@
+﻿<div class="grid">
+    @for (int x = 0; x < Columns; x++)
+    {
+        <div class="column">
+            @for (int y = 0; y < Rows; y++)
+            {
+                <Cell2 x="x" y="y" Entry="Week.Week[x,y]" CellHasUpdated="CellHasUpdated"></Cell2>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int Rows { get; set; }
+    [Parameter] public int Columns { get; set; }
+    [Parameter] public WeekObject Week { get; set; }
+    [Parameter] public EventCallback CellHasUpdated { get; set; }
+}

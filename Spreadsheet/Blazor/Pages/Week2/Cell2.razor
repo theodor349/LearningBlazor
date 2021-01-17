@@ -1,0 +1,5 @@
+﻿@inherits Cell2Class
+
+<div class="cell @(y % 4 == 0 ? "hourStart" : "")">
+    <input type="text" @bind-value="Value" style="background-color: rgb(@Color.R, @Color.G, @Color.B)" />
+</div>

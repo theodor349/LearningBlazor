@@ -1,0 +1,24 @@
+﻿@page "/"
+@inherits Week2Page
+
+@if (data is not null && data.Week is not null)
+{
+    <div class="weekHeader">
+        <div class="column"></div>
+        <div style="display: flex; width: 100%">
+            <h3>Monday</h3>
+            <h3>Tuesday</h3>
+            <h3>Wedensday</h3>
+            <h3>Thursday</h3>
+            <h3>Friday</h3>
+            <h3>Saturday</h3>
+            <h3>Sunday</h3>
+        </div>
+        <div class="column"></div>
+    </div>
+    <div class="week">
+        <TimeColumn StartingHour="startingHour"></TimeColumn>
+        <Grid2 Rows="96" Columns="7" Week="data" CellHasUpdated="UpdateData"></Grid2>
+        <TimeColumn StartingHour="startingHour"></TimeColumn>
+    </div>
+}
