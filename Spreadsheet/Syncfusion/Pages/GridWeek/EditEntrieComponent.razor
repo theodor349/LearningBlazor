@@ -1,0 +1,42 @@
+﻿@using Syncfusion.Pages.GridWeek
+@using Syncfusion.DatabaseModel
+
+@if (Data is not null)
+{
+    <div class="entriesContainer">
+        @foreach (var entry in Data.Entry.Entries)
+        {
+            <EditEntryComponent @ref="_editEntry" Entry="entry" Categories="Categories"></EditEntryComponent>
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public EntryDialogData Data { get; set; }
+    [Parameter] public List<CategoryData> Categories { get; set; }
+
+    private List<EditEntryComponent> _editEntryComponents = new List<EditEntryComponent>();
+    private EditEntryComponent _editEntry
+    {
+        set
+        {
+            _editEntryComponents.Add(value);
+        }
+    }
+
+    public void Cancel()
+    {
+        foreach (var component in _editEntryComponents)
+        {
+            component.Cancel();
+        }
+    }
+
+    public async Task Save()
+    {
+        foreach (var component in _editEntryComponents)
+        {
+            await component.Save();
+        }
+    }
+}

@@ -1,0 +1,40 @@
+﻿@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.DatabaseModel
+
+@if (Entry is not null)
+{
+    <div class="entryContainer">
+        <label>@Entry.Activity</label>
+        <SfDropDownList @ref="dropDownList" TValue="string" TItem="CategoryData" @bind-Index="@dropIndex" DataSource="Categories" Placeholder="@Entry.Category.Name">
+            <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+        </SfDropDownList>
+    </div>
+}
+
+@code {
+    [Parameter] public Entry Entry { get; set; }
+    [Parameter] public List<CategoryData> Categories { get; set; }
+    private int? dropIndex;
+    private SfDropDownList<string, CategoryData> dropDownList;
+
+    protected override void OnParametersSet()
+    {
+        dropIndex = Entry.Category.Id;
+    }
+
+    public void Cancel()
+    {
+    }
+
+    public async Task Save()
+    {
+        if (dropIndex is not null)
+        {
+            var index = (int)dropIndex;
+            if (Entry.Category.Id != index)
+            {
+                await Model.UpdateCategory(Entry.ActivityId, index);
+            }
+        }
+    }
+}

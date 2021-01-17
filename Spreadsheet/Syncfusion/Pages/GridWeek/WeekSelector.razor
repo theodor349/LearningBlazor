@@ -1,0 +1,9 @@
+﻿@page "/"
+@inherits WeekSelectorPage
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Calendars
+
+<DateWeekSelector SelectedDate="SelectedDate" OnDateChanged="(x) => SelectedDate = x"></DateWeekSelector>
+<GridWeek CurrentDate="SelectedDate"></GridWeek>
+
+

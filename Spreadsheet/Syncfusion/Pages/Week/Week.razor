@@ -1,0 +1,22 @@
+﻿@page "/Old"
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Schedule
+@using Syncfusion.Blazor.Data
+
+@inherits WeekPage;
+
+<div class="col-lg-12 control-section">
+    <div class="schedule-wrapper">
+        <SfSchedule TValue="EntryAppointment" SelectedDate="CurrentDate" FirstDayOfWeek="(int)DayOfWeek.Monday" TimeFormat="HH:mm"
+                    Height="1024px" AllowDragAndDrop="false" CssClass="schedule-cell-dimension">
+            @*<ScheduleResources>
+                    <ScheduleResource TItem="Category" DataSource="Categories" ColorField="HexColor"
+                                  TValue="int" Field="CategoryId" IdField="Id"
+                                  Title="Category" Name="Categories" TextField="Name"></ScheduleResource>
+                </ScheduleResources>*@
+            <ScheduleTimeScale SlotCount="4"></ScheduleTimeScale>
+            <ScheduleEventSettings DataSource="Entries"></ScheduleEventSettings>
+        </SfSchedule>
+    </div>
+</div>
+

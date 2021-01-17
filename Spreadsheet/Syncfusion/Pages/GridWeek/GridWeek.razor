@@ -1,0 +1,166 @@
+﻿@inherits GridWeekPage;
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.DatabaseModel
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.DropDowns
+
+@if (Rows is not null)
+{
+    <SfDialog Width="384px" IsModal="true" Visible="showDialog">
+        <ChildContent>
+            <div class="setCategoryDialog">
+                @if (dialogData is not null)
+                {
+                    <EditEntrieComponent @ref="_editEntriesComponent" Data="dialogData" Categories="Categories"></EditEntrieComponent>
+                }
+                <div class="buttons">
+                    <SfButton IsPrimary="true" OnClick="() => OnSubmit()">Save</SfButton>
+                    <SfButton OnClick="() => OnCancel()">Cancel</SfButton>
+                </div>
+            </div>
+        </ChildContent>
+    </SfDialog>
+
+    <SfGrid @ref="DefaultGrid" TValue="Row" DataSource="Rows" GridLines="GridLine.Both" Height="1000px"
+            ContextMenuItems="@(new List<ContextMenuItemModel>() { new ContextMenuItemModel { Text = "Categories", Target = ".e-content", Id = "categories" } })">
+
+        <GridEvents TValue="Row"
+                    QueryCellInfo="CustomizeCell"
+                    OnActionBegin="OnActionBegin"
+                    OnActionComplete="OnActionComplete"
+                    ContextMenuItemClicked="OnContextMenuClick"></GridEvents>
+
+        <GridEditSettings AllowAdding="false" AllowDeleting="false" AllowEditing="true" Mode="EditMode.Normal"></GridEditSettings>
+
+        <GridColumns>
+            <GridColumn Field="@nameof(Row.Time)" Format="HH:mm" Width="96px" IsPrimaryKey="true"></GridColumn>
+            <GridColumn Field="@nameof(Row.Monday)"></GridColumn>
+            <GridColumn Field="@nameof(Row.Tuesday)"></GridColumn>
+            <GridColumn Field="@nameof(Row.Wednesday)"></GridColumn>
+            <GridColumn Field="@nameof(Row.Thursday)"></GridColumn>
+            <GridColumn Field="@nameof(Row.Friday)"></GridColumn>
+            <GridColumn Field="@nameof(Row.Saturday)"></GridColumn>
+            <GridColumn Field="@nameof(Row.Sunday)"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+}
+
+@code{
+    private SfGrid<Row> DefaultGrid;
+    private Row BeforeEdit;
+    private EntryDialogData dialogData;
+    private bool showDialog = false;
+    private EditEntrieComponent _editEntriesComponent;
+
+    protected override void OnInitialized()
+    {
+        OnRefresh += Refresh;
+    }
+
+    public void CustomizeCell(QueryCellInfoEventArgs<Row> args)
+    {
+        var colum = args.Column.Index;
+        if (colum == 0)
+            return;
+
+        var c = Cells[(int)colum - 1, args.Data.Y].Color;
+        args.Cell.AddStyle(new string[] { "background-color:" + "rgb(" + c.R + ", " + c.G + ", " + c.B + ")" + ";" });
+    }
+
+    public void OnActionBegin(ActionEventArgs<Row> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.BeginEdit)
+        {
+            var r = args.Data;
+            BeforeEdit = new Row()
+            {
+                Monday = r.Monday,
+                Tuesday = r.Thursday,
+                Wednesday = r.Wednesday,
+                Thursday = r.Thursday,
+                Friday = r.Friday,
+                Saturday = r.Saturday,
+                Sunday = r.Sunday,
+            };
+        }
+    }
+
+    public async Task OnActionComplete(ActionEventArgs<Row> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            var row = (int)args.RowIndex;
+            var cell = GetColumnChanged(BeforeEdit, args.Data);
+
+            var value = cell.Item2;
+            var date = IndexToDate(cell.Item1, row);
+            await Model.AddEntryString(value, date);
+            await Update();
+        }
+    }
+
+    public async Task Update()
+    {
+        await UpdateValues();
+        Refresh();
+    }
+
+    private void Refresh()
+    {
+        if(DefaultGrid is not null)
+            DefaultGrid.Refresh();
+    }
+
+    public void OnContextMenuClick(ContextMenuClickEventArgs<Row> args)
+    {
+        if (args.Item.Id == "categories")
+        {
+            int x = (int)args.Column.Index - 1;
+            int y = (int)args.RowInfo.RowIndex;
+            var cell = Cells[x, y];
+            if (cell.Entry is not null)
+            {
+                dialogData = new EntryDialogData()
+                {
+                    Entry = cell.Entry,
+                };
+                showDialog = true;
+            }
+        }
+    }
+
+    private Tuple<int, string> GetColumnChanged(Row a, Row b)
+    {
+        if (!a.Monday.Equals(b.Monday))
+            return new Tuple<int, string>(0, b.Monday);
+        else if (!a.Tuesday.Equals(b.Tuesday))
+            return new Tuple<int, string>(1, b.Tuesday);
+        else if (!a.Wednesday.Equals(b.Wednesday))
+            return new Tuple<int, string>(2, b.Wednesday);
+        else if (!a.Thursday.Equals(b.Thursday))
+            return new Tuple<int, string>(3, b.Thursday);
+        else if (!a.Friday.Equals(b.Friday))
+            return new Tuple<int, string>(4, b.Friday);
+        else if (!a.Saturday.Equals(b.Saturday))
+            return new Tuple<int, string>(5, b.Saturday);
+        else if (!a.Sunday.Equals(b.Sunday))
+            return new Tuple<int, string>(6, b.Sunday);
+        else
+            return new Tuple<int, string>(-1, "");
+    }
+
+    private async Task OnSubmit()
+    {
+        await _editEntriesComponent.Save();
+        OnCancel();
+        await Update();
+    }
+
+    private void OnCancel()
+    {
+        showDialog = false;
+        _editEntriesComponent.Cancel();
+    }
+}
