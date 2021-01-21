@@ -1,0 +1,35 @@
+﻿@page "/"
+@using WebAssembly.Connection
+@inject IApiHelper _api
+@inject NavigationManager _nav
+
+<EditForm Model="login">
+    <InputText @bind-Value="login.Username"></InputText>
+    <InputText @bind-Value="login.Password"></InputText>
+    <button @onclick="LoginUser">Login</button>
+</EditForm>
+
+<AuthorizeView>
+    <Authorized>
+        <p>You are logged in</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not logged in :/</p>
+    </NotAuthorized>
+</AuthorizeView>
+@code{
+
+    private Login login = new Login();
+
+    private async Task LoginUser()
+    {
+        await _api.LoginAsync(login.Username, login.Password);
+        _nav.NavigateTo("/counter", true);
+    }
+
+    class Login
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+}
