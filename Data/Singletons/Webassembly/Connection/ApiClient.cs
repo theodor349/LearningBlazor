@@ -16,7 +16,6 @@ namespace Webassembly.Connection
 
         public async Task Login(string username, string password)
         {
-            await Task.Delay(100);
             _user.Username = "Theodor";
             _user.Token = "This is a token";
         }
