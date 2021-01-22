@@ -1,0 +1,15 @@
+﻿@page "/"
+@inject IApiClient _api
+@inject ILoggedinUser _user
+
+<p>Username: @_user.Username</p>
+<p>Token: @_user.Token</p>
+<button @onclick="() => Login()">Load Userdata</button>
+
+@code{ 
+
+    private async Task Login()
+    {
+        await _api.Login("Username", "Password");
+    }
+}
